@@ -52,17 +52,13 @@ def fill_the_form(row: str):
 def preview_the_robot():
     browser.click_button('id:preview')
 
-'''
---- MITEN YRITYSKERRAT JA AIKA TRY-EXCEPTIIN? ---
-Submit the order
-    Wait Until Keyword Succeeds    5x    1 sec    Submit Form    tag:form
-'''
 def submit_the_order():
-    try:
-        browser.submit_form('tag:form')
-    except Exception as inst:   # https://docs.python.org/3/tutorial/errors.html
-        print(type(inst))    # the exception instance
-        print(inst.args)
+    for i in range(5):
+        try:     
+            browser.submit_form('tag:form')
+            break
+        except:
+            print(f'Failed to submit the form. Tried {i} times.')
 
 def store_the_receipt_as_a_PDF_file(row):
     browser.wait_until_element_is_visible('tag:form', 5)  # preview takes some time to load
