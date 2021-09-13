@@ -7,6 +7,7 @@ from RPA.HTTP import HTTP
 from RPA.Tables import Tables
 from RPA.PDF import PDF
 from RPA.Archive import Archive
+from RPA.Robocorp.Vault import Vault
 
 import csv
 
@@ -19,15 +20,16 @@ tables = Tables()
 pdf = PDF()
 archive = Archive()
 
-# variables
-
-url = 'https://robotsparebinindustries.com/#/robot-order'
-
 # functions
 
-# RPA.Robocorp.Vault -libraryä käyttävää osaa ei toteutettu
+# getting website url from vault
+def get_url():
+    _secret = Vault().get_secret("website")
+    url = _secret["order_url"]
+    return url
 
 def open_website_and_close_modal(url: str):
+    
     browser.open_available_browser(url)
     browser.click_button_when_visible('css:.btn.btn-dark')
 
@@ -119,6 +121,7 @@ def create_a_ZIP_file_of_the_receipts():
 
 def main():
     try:
+        url = get_url()
         open_website_and_close_modal(url)
         orders = get_orders()
         for row in orders:

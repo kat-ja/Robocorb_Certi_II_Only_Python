@@ -12,3 +12,5 @@ temp/
 .virtual_documents/
 */.virtual_documents/*
 testrun/*
+vault.json
+devdata/*
