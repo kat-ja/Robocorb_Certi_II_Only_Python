@@ -28,17 +28,20 @@ def get_url():
     url = _secret["order_url"]
     return url
 
-def open_website_and_close_modal(url: str):
-    
+def open_website_and_close_modal(url: str):  
     browser.open_available_browser(url)
     browser.click_button_when_visible('css:.btn.btn-dark')
 
 def get_orders():
-    dialog.add_heading('Upload CSV File')
-    dialog.add_text_input(label='Give URL for CSV-file', name='url')
-    response = dialog.run_dialog()
+    _secret = Vault().get_secret("website")
+    csv_url = _secret["csv_url"]
+    http.download(csv_url, overwrite=True)
 
-    http.download(response.url, overwrite=True)
+    # dialog:
+    #dialog.add_heading('Upload CSV File')
+    #dialog.add_text_input(label='Give URL for CSV-file', name='url')
+    #response = dialog.run_dialog()
+    #http.download(response.url, overwrite=True)
 
     with open('orders.csv') as csvFile:
         # list of dictionaries, https://stackoverflow.com/questions/21572175/convert-csv-file-to-list-of-dictionaries
