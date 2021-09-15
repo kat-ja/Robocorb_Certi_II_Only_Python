@@ -1,4 +1,4 @@
-#output/ output folder must go to github so that archive can be made in the cloud
+output/
 venv/
 temp/
 .rpa/

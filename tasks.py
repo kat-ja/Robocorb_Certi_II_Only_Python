@@ -120,7 +120,7 @@ def go_to_order_another_robot():
     embed_the_robot_screenshot_to_the_receipt_PDF_file(scrshot, path)
 
 def create_a_ZIP_file_of_the_receipts():
-    archive.archive_folder_with_zip('.\\output\\pdf', 'pdfs.zip')
+    archive.archive_folder_with_zip('.\\output\\pdf', 'pdfs.zip', True)
 
 def main():
     try:
