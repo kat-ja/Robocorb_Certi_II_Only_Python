@@ -71,12 +71,12 @@ def store_the_receipt_as_a_PDF_file(row):
     head = browser.get_selected_list_label('id:head')
     body = browser.get_text('//*[@id="root"]/div/div[1]/div/div[1]/form/div[2]/div/div['+row["Body"]+']/label')
     order_html = f'<html><h3>Order number: {row["Order number"]}</h3><p>Head: {head}<br>Body: {body}<br>Legs: {row["Legs"]}<br>Address: {row["Address"]}</p></html>'
-    pdf.html_to_pdf(order_html, '.\\output\\pdf\\'+row["Order number"]+'.pdf')  
-    return '.\\output\\pdf\\'+row["Order number"]+'.pdf'
+    pdf.html_to_pdf(order_html, './output/pdf/'+row["Order number"]+'.pdf')  
+    return './output/pdf/'+row["Order number"]+'.pdf'
 
 def take_a_screenshot_of_the_robot(row):
     browser.wait_until_element_is_visible('id:robot-preview-image', 2)
-    browser.set_screenshot_directory('.\\output\\screenshots')
+    browser.set_screenshot_directory('./output/screenshots')
     scrshot = browser.capture_element_screenshot('id:robot-preview-image',  row['Order number']+'.png')
     return scrshot
 
@@ -108,19 +108,20 @@ def go_to_order_another_robot():
     head = browser.get_selected_list_label('id:head')
     body = browser.get_text('//*[@id="root"]/div/div[1]/div/div[1]/form/div[2]/div/div[1]/label')
     order_html = f'<html><h3>Order number: {order_number}</h3><p>Head: {head}<br>Body: {body}<br>Legs: {legs}<br>Address: {address}</p></html>'
-    path = '.\\output\\pdf\\another_robot.pdf'
+    path = './output/pdf/another_robot.pdf'
     pdf.html_to_pdf(order_html, path)  
 
     # taking screenshot 
     browser.wait_until_element_is_visible('id:robot-preview-image', 2)
-    browser.set_screenshot_directory('.\\output\\screenshots')
+    browser.set_screenshot_directory('./output/screenshots')
     scrshot = browser.capture_element_screenshot('id:robot-preview-image',  order_number + '.png')
 
     # embed screenshot in pdf
     embed_the_robot_screenshot_to_the_receipt_PDF_file(scrshot, path)
 
 def create_a_ZIP_file_of_the_receipts():
-    archive.archive_folder_with_zip('.\\output\\pdf', 'pdfs.zip', True)
+    # './output/pdf/pdfs.zip' tuotti rekursion
+    archive.archive_folder_with_zip('./output/pdf', './output/pdfs.zip')
 
 def main():
     try:
